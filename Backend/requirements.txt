@@ -1,8 +1,0 @@
-torch
-transformers
-datasets
-soundfile
-librosa
-pyaudio
-numpy
-colorama 
