@@ -1,0 +1,88 @@
+# ATC Communication Interface - Pilot-Focused UI/UX Critique
+
+## **Critical Safety & Usability Issues**
+
+### **1. Information Hierarchy Problems**
+- **ATC instructions are buried** in the middle column when they should be the most prominent element
+- **Flight parameters** (altitude, speed, heading) should be more prominent - these are safety-critical
+- **Audio controls** take up too much visual space for what should be a simple play/stop function
+
+### **2. Cognitive Load Issues**
+- **Too much visual noise** with glass effects, gradients, and animations that can distract during critical phases
+- **Status badges scattered** across header instead of grouped logically
+- **Color coding inconsistent** - red used for both "live transmission" and "high priority" actions
+
+### **3. Workflow Inefficiencies**
+- **Execute/Dismiss buttons** require too many clicks for time-critical operations
+- **No keyboard shortcuts** visible for common actions (pilots often wear gloves)
+- **Instructions require scrolling** - everything should be visible at once
+
+## **Aviation-Specific Concerns**
+
+### **4. Display Standards**
+```tsx
+// Current altitude display is too small and decorative
+<MetricCard label="Altitude" value="FL250" unit="ft" trend="up" />
+
+// Should be larger, more prominent like actual avionics:
+<div className="text-4xl font-mono font-bold text-green-400 bg-black p-4 border">
+  FL250
+</div>
+```
+
+### **5. Critical Information Visibility**
+- **Frequency changes** should be more prominent (missing frequency calls is dangerous)
+- **Altitude/heading changes** need immediate visual feedback
+- **Current vs target values** should be clearly distinguished
+
+### **6. Cockpit Environment Adaptation**
+- **No dark mode consideration** for night flights
+- **Text too small** for quick glances while flying
+- **No consideration for turbulence** - buttons too small for precise clicking
+
+## **Recommended UI Improvements**
+
+### **Layout Restructure**
+```tsx
+// Prioritize this layout for pilots:
+1. TOP: Current ATC Instruction (large, unmissable)
+2. LEFT: Critical Flight Parameters (altitude, speed, heading) 
+3. RIGHT: Required Actions (with one-click execution)
+4. BOTTOM: Audio controls and communication log
+```
+
+### **Visual Design**
+- **Remove glass effects** - use flat, high-contrast design
+- **Implement proper dark theme** with green/amber text on black (like real avionics)
+- **Larger touch targets** (minimum 44px for finger/glove operation)
+- **Monospace fonts** for all numerical data
+
+### **Interaction Improvements**
+- **Single-tap action execution** with confirmation only for dangerous actions
+- **Keyboard shortcuts** (Space for audio, Enter for primary action)
+- **Voice feedback** for critical confirmations
+- **Auto-advance** through instructions after execution
+
+### **Safety Enhancements**
+- **Clear visual distinction** between current and target parameters
+- **Immediate feedback** for all actions (not just toast notifications)
+- **Emergency stop button** prominent and red
+- **Connection status** always visible
+
+### **Aviation UI Standards**
+- **Follow DO-178C guidelines** for aviation software interfaces
+- **Use aviation color standards** (green=normal, amber=caution, red=warning)
+- **Implement proper alerting hierarchy** with distinct visual/audio cues
+
+## **Summary**
+
+The current UI looks modern but prioritizes aesthetics over aviation safety and efficiency. A pilot needs immediate access to critical information with minimal cognitive load and maximum reliability. The interface should feel more like actual avionics equipment rather than a consumer app.
+
+## **Priority Fixes**
+
+1. **Make ATC instructions the primary visual element**
+2. **Enlarge flight parameters display**
+3. **Implement aviation-standard color coding**
+4. **Add keyboard shortcuts for all critical actions**
+5. **Design for cockpit lighting conditions**
+6. **Reduce visual complexity and distractions**
